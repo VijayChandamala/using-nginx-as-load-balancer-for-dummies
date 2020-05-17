@@ -1,8 +1,8 @@
-# using-nginx-as-load-balancer-for-dummies
+# Using nginx as load balancer for dummies
 
-## Nginx can be used as reverse proxy and a load balancer.
+Nginx can be used as reverse proxy and a load balancer.
 
-## Here's a simple example of setting up nginx using the nginx docker image.
+Here's a simple example of setting up nginx using the nginx docker image.
 
 This will run a temporary nginx container and copy the default conf file from the container to your current working directory
 
@@ -15,6 +15,7 @@ docker cp tmp-nginx-container:/etc/nginx/nginx.conf .
 
 Once you have the default nginx conf, you can update it as per your requirement.
 
+### nginx.conf
 ```
 user  nginx;
 worker_processes  1;
@@ -61,6 +62,16 @@ server { # simple reverse-proxy
     }
   }
 }
+
+```
+Once after updating the nginx.conf file
+
+You can remove the temp nginx container and run actual nginx for reverse proxy and load balancing.
+
+```
+docker rm -f tmp-nginx-container
+
+docker run --name my-nginx -p 80:80 -v $PWD/nginx.conf:/etc/nginx/nginx.conf:ro -d nginx
 
 ```
 
